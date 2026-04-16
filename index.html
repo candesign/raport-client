@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Raport produktowy</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <header class="header">
+        <h1>Raport produktowy</h1>
+        <p class="subtitle">
+          Transformacja działa lokalnie w przeglądarce. Pliki CSV nie są wysyłane na serwer.
+        </p>
+      </header>
+
+      <section class="card">
+        <h2>Pliki</h2>
+
+        <div class="grid">
+          <label class="field">
+            <span class="label">Wejście: <code>data.csv</code></span>
+            <input id="dataFile" type="file" accept=".csv,text/csv" />
+          </label>
+
+          <label class="field">
+            <span class="label">Mapowanie klientów: <code>klienci.csv</code></span>
+            <input id="clientsFile" type="file" accept=".csv,text/csv" />
+          </label>
+
+          <label class="field">
+            <span class="label">Mapowanie kategorii: <code>kategorie.csv</code></span>
+            <input id="categoriesFile" type="file" accept=".csv,text/csv" />
+          </label>
+        </div>
+
+        <div class="actions">
+          <button id="generateBtn" class="primary" type="button">Generuj CSV</button>
+          <a id="downloadLink" class="button" href="#" download="output.csv" hidden>Pobierz output.csv</a>
+        </div>
+
+        <div id="status" class="status" role="status" aria-live="polite"></div>
+      </section>
+
+      <section class="card">
+        <h2>Podgląd (pierwsze 20 wierszy)</h2>
+        <div class="previewWrap">
+          <table class="preview" id="previewTable">
+            <thead></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <p>
+          Wymagania: separator <code>;</code>, tylko wiersze ze statusem <code>approved</code>.
+        </p>
+      </footer>
+    </main>
+
+    <!-- Papa Parse: solid CSV parsing/unparsing in-browser -->
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
+
