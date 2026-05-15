@@ -52,12 +52,14 @@ def transform(
     )
 
     out_fieldnames = [
+        "Nr",
         "Model",
         "Numer seryjny",
         "Kategoria produktu",
         "Numer klienta",
         "Punkt handlowy",
         "Wartość bonu",
+        "Data akceptacji",
     ]
 
     processed = 0
@@ -83,6 +85,7 @@ def transform(
             if status != "approved":
                 continue
 
+            nr = (row.get("Nr") or "").strip()
             model = (row.get("Model") or "").strip()
             serial = (row.get("Numer seryjny") or "").strip()
 
@@ -93,15 +96,18 @@ def transform(
             klient_no = klient_by_point.get(_norm_key(point), "")
 
             bonus = (row.get("Kwota cashback") or "").strip()
+            accepted_at = (row.get("Data akceptacji") or "").strip()
 
             writer.writerow(
                 {
+                    "Nr": nr,
                     "Model": model,
                     "Numer seryjny": serial,
                     "Kategoria produktu": category_en,
                     "Numer klienta": klient_no,
                     "Punkt handlowy": point,
                     "Wartość bonu": bonus,
+                    "Data akceptacji": accepted_at,
                 }
             )
             written += 1

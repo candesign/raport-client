@@ -11,12 +11,14 @@ const ui = {
 };
 
 const OUTPUT_COLUMNS = [
+  "Nr",
   "Model",
   "Numer seryjny",
   "Kategoria produktu",
   "Numer klienta",
   "Punkt handlowy",
   "Wartość bonu",
+  "Data akceptacji",
 ];
 
 function setStatus(message, { isError = false } = {}) {
@@ -76,6 +78,7 @@ function buildOutputRows(dataRows, klientByPoint, categoryEnByPl) {
     const status = String(row?.["Status"] ?? "").trim().replace(/^"+|"+$/g, "");
     if (status !== "approved") continue;
 
+    const nr = String(row?.["Nr"] ?? "").trim();
     const model = String(row?.["Model"] ?? "").trim();
     const serial = String(row?.["Numer seryjny"] ?? "").trim();
 
@@ -86,14 +89,17 @@ function buildOutputRows(dataRows, klientByPoint, categoryEnByPl) {
     const klientNo = klientByPoint.get(normKey(point)) || "";
 
     const bonus = String(row?.["Kwota cashback"] ?? "").trim();
+    const acceptedAt = String(row?.["Data akceptacji"] ?? "").trim();
 
     out.push({
+      "Nr": nr,
       "Model": model,
       "Numer seryjny": serial,
       "Kategoria produktu": categoryEn,
       "Numer klienta": klientNo,
       "Punkt handlowy": point,
       "Wartość bonu": bonus,
+      "Data akceptacji": acceptedAt,
     });
     written += 1;
   }
